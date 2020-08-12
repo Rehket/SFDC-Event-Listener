@@ -7,6 +7,7 @@ from app.api.api_v1.api import api_router
 import config
 from app.db.session import Session
 from databases import Database
+from app.utils import jwt_login
 
 app = FastAPI(title=config.PROJECT_NAME, openapi_url="/api/v1/openapi.json", openapi_prefix=config.OPEN_API_PREFIX)
 app.mount("/static", StaticFiles(directory="site", html=True), name="site")
@@ -41,6 +42,12 @@ async def db_session_middleware(request: Request, call_next):
 @app.on_event("startup")
 async def startup():
     await database.connect()
+    app.instance_url, app.bearer_token = jwt_login(
+        consumer_id=config.SFDC_CONSUMER_KEY,
+        username=config.SFDC_USERNAME,
+        private_key=config.SFDC_PRIVATE_KEY,
+        environment=config.SFDC_ENVIRONMENT
+    )
 
 
 @app.on_event("shutdown")

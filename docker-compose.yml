@@ -6,25 +6,31 @@ services:
     ports:
       - "8001:8000"
     environment:
-      - PYTHONPATH=/app_dir
-      - SERVER_NAME=localhost
-      - SERVER_HOST=localhost
-      - BACKEND_CORS_ORIGINS="http://localhost, http://localhost:4200, http://localhost:3000, http://localhost:8000"
-      - PROJECT_NAME=Template API
-      - POSTGRES_SERVER=postgres
-      - POSTGRES_DB=template_db
-      - POSTGRES_PORT=5432
-      - POSTGRES_PASSWORD=PG+change_password
-      - POSTGRES_USER=postgres
-      - POSTGRES_SCHEMA=template_schema
-      - SECRET_KEY=)u!weeeeeee(a1(\=%5c7ga(ou@_b_
-      - DEBUG_MODE=True
-      - LOCAL_DEV=True
-      - FIRST_SUPERUSER=adam@adam.com
-      - FIRST_SUPERUSER_PASSWORD=44d339666
-      - USERS_OPEN_REGISTRATION=False
-      - INBOUND_FILE_DIR=/tmp/
-      - SCRIPT_DIRECTORY=/app_dir/scripts/
+      PYTHONPATH: /app_dir
+      SERVER_NAME: localhost
+      SERVER_HOST: localhost
+      BACKEND_CORS_ORIGINS: "http://localhost, http://localhost:4200, http://localhost:3000, http://localhost:8000"
+      PROJECT_NAME: Template API
+      POSTGRES_SERVER: postgres
+      POSTGRES_DB: template_db
+      POSTGRES_PORT: 5432
+      POSTGRES_PASSWORD: PG+change_password
+      POSTGRES_USER: postgres
+      POSTGRES_SCHEMA: template_schema
+      SECRET_KEY: )u!weeeeeee(a1(\=%5c7ga(ou@_b_
+      DEBUG_MODE: "True"
+      LOCAL_DEV: "True"
+      FIRST_SUPERUSER: adam@adam.com
+      FIRST_SUPERUSER_PASSWORD: 44d339666
+      USERS_OPEN_REGISTRATION: "False"
+      INBOUND_FILE_DIR: /tmp/
+      SCRIPT_DIRECTORY: /app_dir/scripts/
+      SFDC_PRIVATE_KEY: $SFDC_PRIVATE_KEY
+      SFDC_USERNAME: $SFDC_USERNAME
+      SFDC_CONSUMER_KEY: $SFDC_CONSUMER_KEY
+      SFDC_ENVIRONMENT: $SFDC_ENVIRONMENT
+    env_file:
+      ./secret.env
     volumes:
       - ./compose-init.ash:/app_dir/compose-init.ash
     depends_on:
